@@ -1,0 +1,68 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 14c87a3979adf68f594a0e22694f4163a39b9cceb829498dda41489a062cd646
+
+name:           powkell
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/powkell#readme>
+homepage:       https://github.com/githubuser/powkell#readme
+bug-reports:    https://github.com/githubuser/powkell/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/powkell
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_powkell
+  hs-source-dirs:
+      src
+  build-depends:
+      GLUT
+    , OpenGL
+    , base >=4.7 && <5
+  default-language: Haskell2010
+
+executable powkell-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_powkell
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      GLUT
+    , OpenGL
+    , base >=4.7 && <5
+    , powkell
+  default-language: Haskell2010
+
+test-suite powkell-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_powkell
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      GLUT
+    , OpenGL
+    , base >=4.7 && <5
+    , powkell
+  default-language: Haskell2010
