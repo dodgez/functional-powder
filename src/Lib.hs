@@ -25,7 +25,8 @@ paint timer = do
   swapBuffers
   return ()
 
-close :: CloseCallback
-close = do
+close :: IORef Bool -> CloseCallback
+close run = do
   putStrLn "Closing window"
-  leaveMainLoop
+  writeIORef run False
+  return ()
