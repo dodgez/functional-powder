@@ -1,22 +1,27 @@
 module Main where
 
 import Control.Concurrent (threadDelay)
-import Graphics.UI.GLUT (ActionOnWindowClose(ContinueExecution), actionOnWindowClose, DisplayMode (RGBAMode, WithDepthBuffer), closeCallback, createWindow, displayCallback, mainLoopEvent, initialDisplayMode, initialize, ($=))
-
-import Lib ( close, paint )
+import Graphics.Rendering.OpenGL
+import Graphics.UI.GLUT
+import Lib
+import Data.IORef
 
 main :: IO ()
 main = do
+  timer <- newIORef 0
   initialize "something" []
-  actionOnWindowClose $= ContinueExecution
-  initialDisplayMode $= [RGBAMode, WithDepthBuffer]
+  actionOnWindowClose $= Exit
+  initialDisplayMode $= [RGBMode, WithDepthBuffer]
   _ <- createWindow "test"
-  displayCallback $= paint
+  windowSize $= Size 1440 900
+  clearColor $= (Color4 (0 :: GLfloat) (0 :: GLfloat) (0 :: GLfloat) (1 :: GLfloat))
+  displayCallback $= (paint timer)
   closeCallback $= Just close
-  mainLoop
+  mainLoop timer
   where
-    mainLoop = do
-      threadDelay 166666
-      paint
+    mainLoop timer = do
+      threadDelay 10000
+      paint timer
+      modifyIORef timer (\time -> time + 1)
       mainLoopEvent
-      mainLoop
+      mainLoop timer
